@@ -11,29 +11,29 @@ namespace Dyson.Towergeist
             _state.speed = 20;
         }
 
-        public override void Idle()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override void BaseToFloor()
         {
-            throw new System.NotImplementedException();
+           //TODO: Roam in the base, when stone is found, take it and put it at the entrance
         }
 
         public override void FloorToDepot()
         {
-            throw new System.NotImplementedException();
+            //TODO: When stone is full, take it to the depot and store it
+        }
+        
+        public override void Idle()
+        {
+            //TODO: Check if stone is full before transporting
         }
 
         public override void DepotToTower()
         {
-            throw new System.NotImplementedException();
+            //TODO: Check if depot is full of stone, if it is transport to Tower
         }
 
         public override void Chatting()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }
