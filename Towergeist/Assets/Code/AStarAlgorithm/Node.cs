@@ -49,12 +49,12 @@ namespace AStarPathFinding.Nodes
         {
             this.nodePrefab = GameObject.Instantiate(nodePrefab, worldPosition, Quaternion.identity, parent);
 
-#if ASTAR_COLORDEBUG
+//#if ASTAR_COLORDEBUG
 _nodeRenderer = this.nodePrefab.GetComponent<Renderer>();
             UpdateNodeColour(Color.white);
-#endif
+//#endif
         }
-#if ASTAR_COLORDEBUG
+//#if ASTAR_COLORDEBUG
         /// <summary>
         /// Updates the Node's Colour.
         /// </summary>
@@ -64,7 +64,7 @@ _nodeRenderer = this.nodePrefab.GetComponent<Renderer>();
             if (_nodeRenderer != null)
                 _nodeRenderer.material.color = colour;
         }
-#endif
+//#endif
         #endregion
     }
 }

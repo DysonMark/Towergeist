@@ -34,7 +34,7 @@ namespace AStarPathFinding.Path
         /// <param name="startPos">Where the path starts.</param>
         /// <param name="endPos">Where the path ends.</param>
         /// <returns>Returns an empty list. (No path was found)</returns>
-#if ASTAR_ALGORITHMDEBUG
+//#if ASTAR_ALGORITHMDEBUG
         public List<Node> FindPath(Vector3 startPos, Vector3 endPos)
         {
             _pathVersion++;
@@ -73,9 +73,9 @@ namespace AStarPathFinding.Path
                 openSet.Remove(currentNode);
                 closedSet.Add(currentNode);
 
-#if ASTAR_COLORDEBUG
+//#if ASTAR_COLORDEBUG
                 currentNode.UpdateNodeColour(_closedSet);
-#endif
+//#endif
                 currentNode.nodeVersion = _pathVersion;
 
                 if (currentNode == endNode)
@@ -100,20 +100,20 @@ namespace AStarPathFinding.Path
                         if (!openSet.Contains(neighbour))
                         {
                             openSet.Add(neighbour);
-#if ASTAR_COLORDEBUG
+//#if ASTAR_COLORDEBUG
                             neighbour.UpdateNodeColour(_neighbourColours);
-#endif
+//#endif
                         }
                     }
                 }
             }
             return new List<Node>();
         }
-#endif
+//#endif
         #endregion
 
         #region Private Functions
-#if ASTAR_ALGORITHMDEBUG
+//#if ASTAR_ALGORITHMDEBUG
         private List<Node> RetracePath(Node startNode, Node endNode)
         {
             List<Node> path = new List<Node>();
@@ -128,12 +128,12 @@ namespace AStarPathFinding.Path
             path.Add(startNode);
             path.Reverse();
 
-#if ASTAR_COLORDEBUG
+//#if ASTAR_COLORDEBUG
             foreach (Node node in path)
             {
                 node.UpdateNodeColour(_chosenPathColour);
             }
-#endif
+//#endif
             return path;
         }
 
@@ -143,7 +143,7 @@ namespace AStarPathFinding.Path
             int dstY = Mathf.Abs(nodeA.gridPosition.y - nodeB.gridPosition.y);
             return dstX + dstY;
         }
-#endif
+//#endif
         #endregion
     }
 }

@@ -97,12 +97,12 @@ namespace AStarPathFinding.MainGrid
                     bool isWalkable = (Physics.OverlapSphere(worldPos, nodeSize * SphereCastRadiusForObstacles, obstacleLayer).Length == 0);
                     _grid[x, y].isWalkable = isWalkable;
 
-#if ASTAR_COLORDEBUG
+//#if ASTAR_COLORDEBUG
                     if (_grid[x, y].nodePrefab != null)
                     {
                         _grid[x, y].UpdateNodeColour(isWalkable ? Color.white : Color.magenta);
                     }
-#endif
+//#endif
                 }
             }
         }
