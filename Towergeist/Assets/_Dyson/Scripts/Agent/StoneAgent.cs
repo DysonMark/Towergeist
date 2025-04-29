@@ -13,7 +13,7 @@ namespace Dyson.Towergeist
         [SerializeField] private GameObject newEndPoint;
         [SerializeField] private GameObject backToBase;
         private bool isRoaming;
-        private int counter;
+        private int stones;
         public override void Start()
         {
          //   _state = new StoneAgent();
@@ -23,7 +23,6 @@ namespace Dyson.Towergeist
         private void Update()
         {
             BaseToFloor();
-
             RaycastHit hit;
             
             if (Physics.SphereCast(transform.position + Vector3.up * 0.5f, 0.3f, Vector3.down, out hit, 3f))
@@ -32,13 +31,27 @@ namespace Dyson.Towergeist
                 {
                     Debug.Log("Stone");
                     Destroy(hit.collider.gameObject);
-                    counter++;
-                    newEndPoint.transform.position = backToBase.transform.position;
-                    Debug.Log("Collect: " + counter);
+                    stones++;
+                  //  isRoaming = false;
+                    //newEndPoint.transform.position = backToBase.transform.position;
+                    //if (newEndPoint.transform.position == backToBase.transform.position)
+                      //  isRoaming = true;
+                    //Debug.Log("Collect: " + stones);
                 }
             }
         }
 
+        private void ReturnToBase()
+        {
+            newEndPoint.transform.position = backToBase.transform.position;
+            var collected = stones;
+            if (stones <= 0)
+            {
+                stones = 0;
+            }
+            Debug.Log("Collected: " + collected);
+            //BaseToFloor();
+        }
         public override void BaseToFloor()
         {
             //TODO: Roam in the base, when stone is found, take it and put it at the entrance
@@ -47,6 +60,7 @@ namespace Dyson.Towergeist
             {
                 isRoaming = true;
                 Invoke("AgentRoaming", 3);
+                Invoke("ReturnToBase", 10);
             }
         }
 

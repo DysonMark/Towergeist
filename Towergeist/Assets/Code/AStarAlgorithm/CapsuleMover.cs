@@ -85,6 +85,12 @@ namespace AStarPathFinding.PathFinder
                     }
                 }
                 _targetIndex++;
+                
+                if (_targetIndex >= _path.Count)
+                {
+                    hasArrivedToDestination = true;
+                    // _isMoving = false;
+                }
             }
         }
 //#endif
