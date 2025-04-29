@@ -23,14 +23,15 @@ namespace AStarPathFinding.PathFinder
 
         private List<Node> _path;
         private int _targetIndex = 0;
-        private Vector3 _lastEndPoint;
+        public Vector3 _lastEndPoint;
+        public bool hasArrivedToDestination;
         #endregion
 
         private void Start()
         {
 //#if ASTAR_ALGORITHMDEBUG
-            _lastEndPoint = endPoint.position;
-            _path = pathfinderScript.FindPath(transform.position, endPoint.position);
+            //_lastEndPoint = endPoint.position;
+            //_path = pathfinderScript.FindPath(transform.position, endPoint.position);
             _targetIndex = 0;
             StartCoroutine(FollowPath());
 //#endif
@@ -45,6 +46,7 @@ namespace AStarPathFinding.PathFinder
                 _path = pathfinderScript.FindPath(transform.position, endPoint.position);
                 _targetIndex = 0;
             }
+            //hasArrivedToDestination = false;
 //#endif
         }
 
@@ -64,6 +66,7 @@ namespace AStarPathFinding.PathFinder
 
                 if (_targetIndex >= _path.Count)
                 {
+                    hasArrivedToDestination = true;
                     // _isMoving = false;
                     yield return null;
                     continue;

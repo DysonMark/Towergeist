@@ -1,3 +1,4 @@
+using System;
 using JW.Grid.GOAP;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Dyson.Towergeist
     {
         public int speed;
 
+        public abstract void Start();
         public abstract void Idle();
         public abstract void BaseToFloor();
         public abstract void FloorToDepot();
