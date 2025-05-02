@@ -1,3 +1,4 @@
+using AStarPathFinding.PathFinder;
 using UnityEngine;
 
 namespace JW.Grid.GOAP.Goals
@@ -9,9 +10,7 @@ namespace JW.Grid.GOAP.Goals
         [HideInInspector] public bool GoalCanRun;
         [HideInInspector] public bool GoalCompleted;
         [HideInInspector] public bool isGoalActivated;
-        //protected AI Agent;
-        // Add the AI script for things like states and movement
-        // TODO: Create and add awareness system
+        protected CapsuleMover  moveSystem;
 
         public virtual void Awake()
         {
