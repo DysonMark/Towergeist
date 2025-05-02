@@ -10,9 +10,9 @@ namespace Resources
     public class ResourceManager : MonoBehaviour
     {
         [Header("Resources")] 
-        [SerializeField] private float WoodAmount;
+        [SerializeField] public float WoodAmount;
         [SerializeField] public float StoneAmount;
-        [SerializeField] private float CementAmount;
+        [SerializeField] public float CementAmount;
         [SerializeField] private ResourceSite resourceSite;
         public bool IsOnResourceSite = false;
         
@@ -20,7 +20,7 @@ namespace Resources
         [SerializeField] private TMP_Text woodAmountText;
         [SerializeField] private TMP_Text stoneAmountText;
         [SerializeField] private TMP_Text cementAmountText;
-
+        
         public enum ResourceType
         {
             Wood,
@@ -83,17 +83,17 @@ namespace Resources
         /// <param name="amount"></param>
         public void AddResource(ResourceType resource, float amount)
         {
-            if (resource == ResourceType.Wood)
+            if (resource == ResourceType.Wood && gameObject.name == "WoodAgent")
             {
                 WoodAmount += amount; 
                 woodAmountText.text = $"Wood: {WoodAmount}";
             }
-            else if (resource == ResourceType.Stone)
+            else if (resource == ResourceType.Stone && gameObject.name == "StoneAgent")
             {
                 StoneAmount += amount; 
                 stoneAmountText.text = $"Stone: {StoneAmount}";
             }
-            else if (resource == ResourceType.Cement)
+            else if (resource == ResourceType.Cement && gameObject.name == "CementAgent")
             {
                 CementAmount += amount; 
                 cementAmountText.text = $"Cement: {CementAmount}";

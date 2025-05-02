@@ -13,6 +13,8 @@ namespace JW.Grid.GOAP.Actions
         public int Cost;
 
         [SerializeField] protected CapsuleMover moveSystem;
+        [SerializeField] protected CapsuleMover moveSystemTwo;
+        [SerializeField] protected CapsuleMover moveSystemThree;
         // Add the AI script here for things like states and movement stuff
         private void Awake()
         {
