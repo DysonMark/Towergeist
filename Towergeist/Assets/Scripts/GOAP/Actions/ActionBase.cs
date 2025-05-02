@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AStarPathFinding.PathFinder;
 using JW.Grid.GOAP.Goals;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ namespace JW.Grid.GOAP.Actions
     {
         [Header("Base Action")]
         public int Cost;
-        //protected AI Agent;
+
+        protected CapsuleMover moveSystem;
         // Add the AI script here for things like states and movement stuff
         private void Awake()
         {
