@@ -12,6 +12,7 @@ namespace Dyson.Towergeist
         public CapsuleMover _capsuleMover;
         [SerializeField] private GameObject newEndPoint;
         [SerializeField] private GameObject backToBase;
+        private bool isBaseFull;
         private bool isRoaming;
         private int stones;
         public override void Start()
@@ -50,6 +51,11 @@ namespace Dyson.Towergeist
                 stones = 0;
             }
             Debug.Log("Collected: " + collected);
+            if (collected >= 5)
+            {
+                Debug.Log("Base full of stones");
+                isBaseFull = true;
+            }
             //BaseToFloor();
         }
         public override void BaseToFloor()
