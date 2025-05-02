@@ -11,7 +11,7 @@ namespace Resources
     {
         [Header("Resources")] 
         [SerializeField] private float WoodAmount;
-        [SerializeField] private float StoneAmount;
+        [SerializeField] public float StoneAmount;
         [SerializeField] private float CementAmount;
         [SerializeField] private ResourceSite resourceSite;
         public bool IsOnResourceSite = false;

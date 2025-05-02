@@ -227,6 +227,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1805386452}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &25280471
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 25280472}
+  m_Layer: 0
+  m_Name: TestPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &25280472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25280471}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 19.42, y: 0, z: 17.61}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &205210893
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,6 +480,7 @@ GameObject:
   - component: {fileID: 495864482}
   - component: {fileID: 495864485}
   - component: {fileID: 495864484}
+  - component: {fileID: 495864486}
   m_Layer: 0
   m_Name: GOAP
   m_TagString: Untagged
@@ -472,6 +504,7 @@ MonoBehaviour:
   currentAction: {fileID: 0}
   actions:
   - {fileID: 495864485}
+  - {fileID: 495864486}
   goals:
   - {fileID: 495864484}
   currentTime: 2
@@ -509,6 +542,8 @@ MonoBehaviour:
   collectPriority: 1
   priorityBuildRate: 1
   priorityDecayRate: 0.5
+  _resourceManager: {fileID: 728442635}
+  lowStoneThreshold: 5
 --- !u!114 &495864485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,6 +557,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 0
+  moveSystem: {fileID: 728442624}
+  _resources: {fileID: 728442635}
+  stoneEndPoint: {fileID: 1743365212}
+  testPoint: {fileID: 25280472}
+--- !u!114 &495864486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495864479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 795fa2cbb0104c41aa9f4dd0d35a5675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  moveSystem: {fileID: 728442624}
 --- !u!1 &535922045
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,7 +1216,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 8057662491952334421}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728442623}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5b72a349028bd44a89ae3b63ddd2698, type: 3}
   m_Name: 
@@ -1185,7 +1238,27 @@ MonoBehaviour:
   _capsuleMover: {fileID: 728442624}
   newEndPoint: {fileID: 1743365211}
   backToBase: {fileID: 1793139351}
---- !u!54 &728442634
+--- !u!114 &728442635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728442623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e64d7e2546946068cba38e1faf9f2eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WoodAmount: 0
+  StoneAmount: 0
+  CementAmount: 0
+  resourceSite: {fileID: 1939459171}
+  IsOnResourceSite: 0
+  woodAmountText: {fileID: 2005849466}
+  stoneAmountText: {fileID: 2005849465}
+  cementAmountText: {fileID: 2005849464}
+--- !u!54 &728442640
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1207,31 +1280,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &728442635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728442623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e64d7e2546946068cba38e1faf9f2eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WoodAmount: 0
-  StoneAmount: 0
-  CementAmount: 0
-  resourceSite: {fileID: 0}
-  IsOnResourceSite: 0
-  woodAmountText: {fileID: 2005849466}
-  stoneAmountText: {fileID: 2005849465}
-  cementAmountText: {fileID: 2005849464}
 --- !u!1 &927207441
 GameObject:
   m_ObjectHideFlags: 0
@@ -2423,7 +2476,7 @@ GameObject:
   m_Layer: 0
   m_Name: Endpoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2436,7 +2489,7 @@ Transform:
   m_GameObject: {fileID: 1743365211}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: -3}
+  m_LocalPosition: {x: 1.84, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3011,7 +3064,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939459165}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3064,7 +3117,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4, y: -2.18, z: -1.7975}
-  m_LocalScale: {x: 7.6802115, y: 5.7382045, z: 9.753586}
+  m_LocalScale: {x: 7.6802115, y: 20.856077, z: 9.753586}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3415,7 +3468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4229179665214051602, guid: 8c45b41142ee89d49a23db740ea05bd0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.56
+      value: 0.914
       objectReference: {fileID: 0}
     - target: {fileID: 4229179665214051602, guid: 8c45b41142ee89d49a23db740ea05bd0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3455,7 +3508,7 @@ PrefabInstance:
       objectReference: {fileID: 1743365212}
     - target: {fileID: 4241503023405099010, guid: 8c45b41142ee89d49a23db740ea05bd0, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4241503023405099010, guid: 8c45b41142ee89d49a23db740ea05bd0, type: 3}
       propertyPath: gridScript
@@ -3493,7 +3546,7 @@ PrefabInstance:
       addedObject: {fileID: 728442635}
     - targetCorrespondingSourceObject: {fileID: 2631613466503418196, guid: 8c45b41142ee89d49a23db740ea05bd0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 728442634}
+      addedObject: {fileID: 728442640}
   m_SourcePrefab: {fileID: 100100000, guid: 8c45b41142ee89d49a23db740ea05bd0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -3505,6 +3558,7 @@ SceneRoots:
   - {fileID: 1623009315}
   - {fileID: 8057662491952334421}
   - {fileID: 1743365212}
+  - {fileID: 25280472}
   - {fileID: 363159494}
   - {fileID: 1927168492}
   - {fileID: 1805386452}
