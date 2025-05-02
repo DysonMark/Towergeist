@@ -13,6 +13,8 @@ namespace Resources
         [SerializeField] private float WoodAmount;
         [SerializeField] private float StoneAmount;
         [SerializeField] private float CementAmount;
+        [SerializeField] private ResourceSite resourceSite;
+        public bool IsOnResourceSite = false;
         
         [Header("UI")]
         [SerializeField] private TMP_Text woodAmountText;
@@ -32,6 +34,33 @@ namespace Resources
             AddResource(ResourceType.Wood, 0f);
             AddResource(ResourceType.Stone, 0f);
             AddResource(ResourceType.Cement, 0f);
+        }
+
+        private void Update()
+        {
+            // Resource Site harvesting
+            if (IsOnResourceSite)
+            {
+                AddResource(resourceSite.resourceType, resourceSite.resourceAmountPerSecond * Time.deltaTime);
+            }
+        }
+        
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("ResourceSite"))
+            {
+                IsOnResourceSite = true;
+                resourceSite = other.GetComponent<ResourceSite>();
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("ResourceSite"))
+            {
+                IsOnResourceSite = false;
+                resourceSite = null;
+            }
         }
 
         /// <summary>
@@ -68,6 +97,52 @@ namespace Resources
             {
                 CementAmount += amount; 
                 cementAmountText.text = $"Cement: {CementAmount}";
+            }
+        }
+
+        public void TransferResource(ResourceType resource, float amount, ref ResourceManager transferTo)
+        {
+            if (resource == ResourceType.Wood)
+            {
+                if (WoodAmount >= amount) // If we have more than requested amound
+                {
+                    transferTo.AddWood(amount);
+                    AddResource(resource, -amount);
+                }
+                else // If we don't have enough
+                {
+                    transferTo.AddResource(resource, WoodAmount); // Give all the wood we have
+                    AddResource(resource, -WoodAmount); // Remove all our wood we had
+                }
+            }
+            else if (resource == ResourceType.Stone)
+            {
+                if (StoneAmount >= amount) // If we have more than requested amound
+                {
+                    // Give the resource and subtract it from our amount
+                    transferTo.AddResource(resource, amount);
+                    AddResource(resource, -amount);
+                }
+                else // If we don't have enough
+                {
+                    transferTo.AddResource(resource, StoneAmount); // Give all the wood we have
+                    AddResource(resource, -StoneAmount); // Remove all our wood we had
+                }
+            }
+            else if (resource == ResourceType.Cement)
+            {
+                if (CementAmount >= amount) // If we have more than requested amound
+                {
+                    // Give the resource and subtract it from our amount
+                    transferTo.AddResource(resource, amount); 
+                    AddResource(resource, -amount);
+                }
+                else // If we don't have enough
+                {
+                    // Give the resource and subtract it from our amount
+                    transferTo.AddResource(resource, CementAmount); // Give all the wood we have
+                    AddResource(resource, -CementAmount); // Remove all our wood we had
+                }
             }
         }
 

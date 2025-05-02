@@ -18,6 +18,8 @@ namespace Tower
         [SerializeField] private List<float> woodNeeded;
         [SerializeField] private List<float> stoneNeeded;
         [SerializeField] private List<float> cementNeeded;
+        private List<ResourceManager> agentsInRange = new List<ResourceManager>();
+        [SerializeField] private float resourceCollectionRange;
 
         [Header("Debug")] 
         public bool resourcesSufficient = false;
@@ -26,6 +28,16 @@ namespace Tower
         private void Start()
         {
             resourceManager = GetComponent<ResourceManager>();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            ResourceManager agentResourceManager = other.GetComponent<ResourceManager>();
+            if (agentResourceManager == null) return;
+            
+            agentResourceManager.TransferResource(ResourceManager.ResourceType.Wood,   agentResourceManager.GetResourceAmount(ResourceManager.ResourceType.Wood),  ref resourceManager);
+            agentResourceManager.TransferResource(ResourceManager.ResourceType.Stone,  agentResourceManager.GetResourceAmount(ResourceManager.ResourceType.Stone), ref resourceManager);
+            agentResourceManager.TransferResource(ResourceManager.ResourceType.Cement, agentResourceManager.GetResourceAmount(ResourceManager.ResourceType.Cement),ref resourceManager);
         }
 
         public void CheckResources()
