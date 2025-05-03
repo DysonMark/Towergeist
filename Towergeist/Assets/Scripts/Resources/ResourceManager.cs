@@ -51,6 +51,7 @@ namespace Resources
             {
                 IsOnResourceSite = true;
                 resourceSite = other.GetComponent<ResourceSite>();
+                Debug.Log($"<color=red> {gameObject.name} is on resource site {resourceSite.resourceType}");
             }
         }
 
@@ -86,17 +87,17 @@ namespace Resources
             if (resource == ResourceType.Wood && gameObject.name == "WoodAgent")
             {
                 WoodAmount += amount; 
-                woodAmountText.text = $"Wood: {WoodAmount}";
+                if (woodAmountText) woodAmountText.text = $"Wood: {WoodAmount}";
             }
             else if (resource == ResourceType.Stone && gameObject.name == "StoneAgent")
             {
                 StoneAmount += amount; 
-                stoneAmountText.text = $"Stone: {StoneAmount}";
+                if (stoneAmountText) stoneAmountText.text = $"Stone: {StoneAmount}";
             }
             else if (resource == ResourceType.Cement && gameObject.name == "CementAgent")
             {
                 CementAmount += amount; 
-                cementAmountText.text = $"Cement: {CementAmount}";
+                if (cementAmountText) cementAmountText.text = $"Cement: {CementAmount}";
             }
         }
 

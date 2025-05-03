@@ -11,11 +11,25 @@ GameObject:
   - component: {fileID: 7214234163991406278}
   - component: {fileID: 5474599548932202911}
   - component: {fileID: 3299193424181117529}
+  - component: {fileID: 2974586361600840372}
+  - component: {fileID: 8784998692589650808}
+  - component: {fileID: 1087550458057885445}
+  - component: {fileID: 735057122911152306}
   - component: {fileID: 8870861243989222760}
-  - component: {fileID: 2314014159402149600}
-  m_Layer: 0
+  - component: {fileID: 4436252950200972949}
+  - component: {fileID: 6861025950665562476}
+  - component: {fileID: 64455777893516775}
+  - component: {fileID: 2617979273709695128}
+  - component: {fileID: 8754804227001666938}
+  - component: {fileID: 4548699925887489271}
+  - component: {fileID: 838323583768768712}
+  - component: {fileID: 2815790430629028675}
+  - component: {fileID: 4772643940863043103}
+  - component: {fileID: 1492118466605474936}
+  - component: {fileID: 6336459464335933342}
+  m_Layer: 3
   m_Name: Worker_Wood
-  m_TagString: Untagged
+  m_TagString: Agent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +44,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -85,6 +99,82 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2974586361600840372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e64d7e2546946068cba38e1faf9f2eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WoodAmount: 0
+  StoneAmount: 0
+  CementAmount: 0
+  resourceSite: {fileID: 0}
+  IsOnResourceSite: 0
+  woodAmountText: {fileID: 0}
+  stoneAmountText: {fileID: 0}
+  cementAmountText: {fileID: 0}
+--- !u!114 &8784998692589650808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00cd8cf48d083fa49bdc2461240fddfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  workingArea: {fileID: 0}
+  gatheringArea: {fileID: 0}
+  chattingArea: {fileID: 0}
+  restingArea: {fileID: 0}
+  pathfinder: {fileID: 0}
+  moveSpeed: 3
+--- !u!114 &1087550458057885445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8691c5c98a0c4e27acf1b56e7f445768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGoal: {fileID: 0}
+  currentAction: {fileID: 0}
+  actions: []
+  goals: []
+  currentTime: 0
+  planInterval: 5
+--- !u!114 &735057122911152306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a160ffb00d7813949ae9c60889d16005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tiredness: 0
+  CanSleep: 0
+  IsBored: 0
+  Rested: 0
+  IsBeingYelledAt: 0
+  canFly: 0
+  isHeavy: 0
+  IsFriendly: 1
 --- !u!65 &8870861243989222760
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -106,7 +196,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2314014159402149600
+--- !u!114 &4436252950200972949
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,13 +205,180 @@ MonoBehaviour:
   m_GameObject: {fileID: 5272517685237043754}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b72a349028bd44a89ae3b63ddd2698, type: 3}
+  m_Script: {fileID: 11500000, guid: 36f9a0ecf38cc0c4185b75257b39f7aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 0}
-  gridScript: {fileID: 0}
-  pathfinderScript: {fileID: 0}
-  movementSpeed: 2
-  capsuleHeightOffset: 1
-  _lastEndPoint: {x: 0, y: 0, z: 0}
-  hasArrivedToDestination: 0
+  Cost: 0
+  moveSystem: {fileID: 0}
+  moveSystemTwo: {fileID: 0}
+  moveSystemThree: {fileID: 0}
+  tiredThreshold: 50
+  workRate: 10
+  areaMover: {fileID: 8784998692589650808}
+--- !u!114 &6861025950665562476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b53378fb9287d8c45b989d231887829a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  moveSystem: {fileID: 0}
+  moveSystemTwo: {fileID: 0}
+  moveSystemThree: {fileID: 0}
+  areaMover: {fileID: 8784998692589650808}
+--- !u!114 &64455777893516775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98238f50394574f83c042e3ef6aa8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoalCanRun: 0
+  GoalCompleted: 0
+  isGoalActivated: 0
+  tiredThreshold: 50
+--- !u!114 &2617979273709695128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6198f65d28411c340aa977a3f94e185a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoalCanRun: 0
+  GoalCompleted: 0
+  isGoalActivated: 0
+  tiredThreshold: 50
+--- !u!114 &8754804227001666938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19745ceca5d510d4f9013f1f5ed4c71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  moveSystem: {fileID: 0}
+  moveSystemTwo: {fileID: 0}
+  moveSystemThree: {fileID: 0}
+  chatRestAmount: 20
+  areaMover: {fileID: 8784998692589650808}
+--- !u!114 &4548699925887489271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b3b10e877fc614dbab91f108e9258c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  moveSystem: {fileID: 0}
+  moveSystemTwo: {fileID: 0}
+  moveSystemThree: {fileID: 0}
+  areaMover: {fileID: 8784998692589650808}
+--- !u!114 &838323583768768712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c702883266b0845b054f7fb4ed6a3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatSprite: {fileID: 21300000, guid: bf744ff044fb92d489d719de419f515e, type: 3}
+  height: 2
+  duration: 2
+--- !u!114 &2815790430629028675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f5e57f36b25f346abe4ca3650004c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yellSprite: {fileID: 21300000, guid: f5d59dfe231fe814d8cbfca2b7050e13, type: 3}
+  height: 2
+  duration: 3
+--- !u!114 &4772643940863043103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cde9df4c74423c144a961f0583038077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoalCanRun: 0
+  GoalCompleted: 0
+  isGoalActivated: 0
+  basePriority: 20
+--- !u!114 &1492118466605474936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f4b5a1f4a2448729a3990a3105b65d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoalCanRun: 0
+  GoalCompleted: 0
+  isGoalActivated: 0
+  priority: 10
+--- !u!65 &6336459464335933342
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1.5109116, z: 2}
+  m_Center: {x: 0, y: -0.2554558, z: 0}

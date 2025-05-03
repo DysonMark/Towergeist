@@ -34,10 +34,19 @@ namespace Tower
         {
             ResourceManager agentResourceManager = other.GetComponent<ResourceManager>();
             if (agentResourceManager == null) return;
-            
+            print("Transfering resources");
             agentResourceManager.TransferResource(ResourceManager.ResourceType.Wood,   agentResourceManager.GetResourceAmount(ResourceManager.ResourceType.Wood),  ref resourceManager);
             agentResourceManager.TransferResource(ResourceManager.ResourceType.Stone,  agentResourceManager.GetResourceAmount(ResourceManager.ResourceType.Stone), ref resourceManager);
             agentResourceManager.TransferResource(ResourceManager.ResourceType.Cement, agentResourceManager.GetResourceAmount(ResourceManager.ResourceType.Cement),ref resourceManager);
+
+            if (CheckResourcesAmounts())
+            {
+                resourceManager.AddWood(-woodNeeded[towerLevel]);
+                resourceManager.AddStone(-stoneNeeded[towerLevel]);
+                resourceManager.AddCement(-cementNeeded[towerLevel]);
+                towerLevels[towerLevel].SetActive(true);
+                towerLevel++;
+            }
         }
 
         public void CheckResources()

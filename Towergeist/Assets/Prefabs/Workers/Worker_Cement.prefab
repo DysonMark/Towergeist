@@ -11,11 +11,25 @@ GameObject:
   - component: {fileID: 8996462507302344158}
   - component: {fileID: 1307320709544776776}
   - component: {fileID: 8165493364741070242}
+  - component: {fileID: 4173173525171701594}
+  - component: {fileID: 478877802060008668}
+  - component: {fileID: 8558107668022152764}
   - component: {fileID: 7776504754071086910}
-  - component: {fileID: 693206618185345952}
-  m_Layer: 0
+  - component: {fileID: 7664247523403328709}
+  - component: {fileID: 6204444252805310126}
+  - component: {fileID: 7564106119304719086}
+  - component: {fileID: 7959313752051739417}
+  - component: {fileID: 5649279946031941206}
+  - component: {fileID: 4902080058664558701}
+  - component: {fileID: 3535687253338550992}
+  - component: {fileID: 981365339121775109}
+  - component: {fileID: 3087058287869071568}
+  - component: {fileID: 5777842836788113064}
+  - component: {fileID: 1150102866868975432}
+  - component: {fileID: 7660269969895858748}
+  m_Layer: 3
   m_Name: Worker_Cement
-  m_TagString: Untagged
+  m_TagString: Agent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +44,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -85,6 +99,64 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4173173525171701594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00cd8cf48d083fa49bdc2461240fddfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  workingArea: {fileID: 0}
+  gatheringArea: {fileID: 0}
+  chattingArea: {fileID: 0}
+  restingArea: {fileID: 0}
+  pathfinder: {fileID: 0}
+  moveSpeed: 3
+--- !u!114 &478877802060008668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e64d7e2546946068cba38e1faf9f2eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WoodAmount: 0
+  StoneAmount: 0
+  CementAmount: 0
+  resourceSite: {fileID: 0}
+  IsOnResourceSite: 0
+  woodAmountText: {fileID: 0}
+  stoneAmountText: {fileID: 0}
+  cementAmountText: {fileID: 0}
+--- !u!114 &8558107668022152764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a160ffb00d7813949ae9c60889d16005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tiredness: 0
+  CanSleep: 0
+  IsBored: 0
+  Rested: 0
+  IsBeingYelledAt: 0
+  canFly: 0
+  isHeavy: 0
+  IsFriendly: 0
 --- !u!65 &7776504754071086910
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -104,9 +176,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &693206618185345952
+  m_Size: {x: 1, y: 1.5168388, z: 1}
+  m_Center: {x: 0, y: -0.2584195, z: 0}
+--- !u!114 &7664247523403328709
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,13 +187,198 @@ MonoBehaviour:
   m_GameObject: {fileID: 87725504943284057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5b72a349028bd44a89ae3b63ddd2698, type: 3}
+  m_Script: {fileID: 11500000, guid: 8691c5c98a0c4e27acf1b56e7f445768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endPoint: {fileID: 0}
-  gridScript: {fileID: 0}
-  pathfinderScript: {fileID: 0}
-  movementSpeed: 2
-  capsuleHeightOffset: 1
-  _lastEndPoint: {x: 0, y: 0, z: 0}
-  hasArrivedToDestination: 0
+  currentGoal: {fileID: 0}
+  currentAction: {fileID: 0}
+  actions: []
+  goals: []
+  currentTime: 0
+  planInterval: 5
+--- !u!114 &6204444252805310126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f9a0ecf38cc0c4185b75257b39f7aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  moveSystem: {fileID: 0}
+  moveSystemTwo: {fileID: 0}
+  moveSystemThree: {fileID: 0}
+  tiredThreshold: 50
+  workRate: 10
+  areaMover: {fileID: 4173173525171701594}
+--- !u!114 &7564106119304719086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b53378fb9287d8c45b989d231887829a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  moveSystem: {fileID: 0}
+  moveSystemTwo: {fileID: 0}
+  moveSystemThree: {fileID: 0}
+  areaMover: {fileID: 4173173525171701594}
+--- !u!114 &7959313752051739417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98238f50394574f83c042e3ef6aa8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoalCanRun: 0
+  GoalCompleted: 0
+  isGoalActivated: 0
+  tiredThreshold: 50
+--- !u!114 &5649279946031941206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6198f65d28411c340aa977a3f94e185a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoalCanRun: 0
+  GoalCompleted: 0
+  isGoalActivated: 0
+  tiredThreshold: 50
+--- !u!114 &4902080058664558701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19745ceca5d510d4f9013f1f5ed4c71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  moveSystem: {fileID: 0}
+  moveSystemTwo: {fileID: 0}
+  moveSystemThree: {fileID: 0}
+  chatRestAmount: 20
+  areaMover: {fileID: 4173173525171701594}
+--- !u!114 &3535687253338550992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b3b10e877fc614dbab91f108e9258c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  moveSystem: {fileID: 0}
+  moveSystemTwo: {fileID: 0}
+  moveSystemThree: {fileID: 0}
+  areaMover: {fileID: 4173173525171701594}
+--- !u!114 &981365339121775109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c702883266b0845b054f7fb4ed6a3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatSprite: {fileID: 21300000, guid: bf744ff044fb92d489d719de419f515e, type: 3}
+  height: 2
+  duration: 2
+--- !u!114 &3087058287869071568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f5e57f36b25f346abe4ca3650004c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yellSprite: {fileID: 21300000, guid: f5d59dfe231fe814d8cbfca2b7050e13, type: 3}
+  height: 2
+  duration: 3
+--- !u!114 &5777842836788113064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cde9df4c74423c144a961f0583038077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoalCanRun: 0
+  GoalCompleted: 0
+  isGoalActivated: 0
+  basePriority: 20
+--- !u!114 &1150102866868975432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f4b5a1f4a2448729a3990a3105b65d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GoalCanRun: 0
+  GoalCompleted: 0
+  isGoalActivated: 0
+  priority: 10
+--- !u!65 &7660269969895858748
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87725504943284057}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1.5109116, z: 2}
+  m_Center: {x: 0, y: -0.2554558, z: 0}
