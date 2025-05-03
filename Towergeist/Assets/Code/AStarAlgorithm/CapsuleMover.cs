@@ -29,29 +29,30 @@ namespace AStarPathFinding.PathFinder
 
         private void Start()
         {
-//#if ASTAR_ALGORITHMDEBUG
+            //#if ASTAR_ALGORITHMDEBUG
             //_lastEndPoint = endPoint.position;
             //_path = pathfinderScript.FindPath(transform.position, endPoint.position);
             _targetIndex = 0;
             StartCoroutine(FollowPath());
-//#endif
+            //#endif
         }
 
         private void Update()
         {
-//#if ASTAR_ALGORITHMDEBUG
-            if (Vector3.Distance(endPoint.position, _lastEndPoint) > 0.1f)
+            //#if ASTAR_ALGORITHMDEBUG
+            if (endPoint == null) return;
+                if (Vector3.Distance(endPoint.position, _lastEndPoint) > 0.1f)
             {
                 _lastEndPoint = endPoint.position;
                 _path = pathfinderScript.FindPath(transform.position, endPoint.position);
                 _targetIndex = 0;
             }
             //hasArrivedToDestination = false;
-//#endif
+            //#endif
         }
 
         #region Private Functions
-//#if ASTAR_ALGORITHMDEBUG
+        //#if ASTAR_ALGORITHMDEBUG
         private IEnumerator FollowPath()
         {
             // _isMoving = true;
@@ -85,7 +86,7 @@ namespace AStarPathFinding.PathFinder
                     }
                 }
                 _targetIndex++;
-                
+
                 if (_targetIndex >= _path.Count)
                 {
                     hasArrivedToDestination = true;
@@ -93,7 +94,7 @@ namespace AStarPathFinding.PathFinder
                 }
             }
         }
-//#endif
+        //#endif
         #endregion
     }
 }

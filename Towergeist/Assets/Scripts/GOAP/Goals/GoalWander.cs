@@ -6,7 +6,7 @@ namespace JW.Grid.GOAP.Goals
     {
         [SerializeField] private float WanderPriority = 30f;
         [SerializeField] private float priorityBuildRate = 1f;
-        [SerializeField] private float priorityDecayRate = .5f;
+        [SerializeField] private float priorityDecayRate = 0.5f;
         private float currentPriority = 30f;
 
         public override void OnGoalActivated()
