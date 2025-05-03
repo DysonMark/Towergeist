@@ -1,12 +1,13 @@
 using System;
 using System.Linq;
-using System.Collections.Generic;
 using JW.Grid.GOAP.Actions;
 using UnityEngine;
 using Agents.Goalss;
 using Stat;
 using Actions.CompletionAnnouncement;
 using Movement;
+using System.Collections.Generic;
+using Actions.Chat;
 
 namespace Actions.Yell
 {
@@ -14,30 +15,28 @@ namespace Actions.Yell
     {
         #region Variables
         [SerializeField] private AreaMover areaMover;
-        private GeneralAgentStats stats;
 
         public bool IsDone { get; private set; }
         public event Action OnCompleted;
 
         public override List<Type> GetSupportedGoals() => new() { typeof(GoalRest) };
         public override float GetCost() => 1f;
+        private GeneralAgentStats _stats;
         #endregion
 
         public override void OnActivated()
         {
-            stats ??= GetComponent<GeneralAgentStats>();
-            if (stats.IsFriendly)
-            {
-                Debug.Log($"{name}: Friendly agents do't yell.");
-                Complete();
-                return;
-            }
-
+            _stats ??= GetComponent<GeneralAgentStats>();
             areaMover ??= GetComponent<AreaMover>();
+
             if (areaMover == null)
             {
-                Complete();
-                return;
+                Complete(); return;
+            }
+            if (_stats.IsFriendly)
+            {
+                Debug.Log($"{name}: Friendly agents do not yell.");
+                Complete(); return;
             }
 
             IsDone = false;
@@ -61,6 +60,9 @@ namespace Actions.Yell
             {
                 Debug.Log($"{name}: Yelling at {victim.name}!");
                 victim.GetComponent<GeneralAgentStats>().IsBeingYelledAt = true;
+
+                GetComponent<SpritePopup>()?.ShowYell();
+                victim.GetComponent<SpritePopup>()?.ShowYell();
             }
             else
             {
@@ -79,7 +81,7 @@ namespace Actions.Yell
         public override void OnTick(float dt) { }
         public override void OnDeactivated()
         {
-            stats.IsBeingYelledAt = false;
+            _stats.IsBeingYelledAt = false;
         }
     }
 }
