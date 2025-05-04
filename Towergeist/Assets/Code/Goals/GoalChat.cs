@@ -34,8 +34,9 @@ namespace JW.Grid.GOAP.Goals
         public override bool CanRun()
         {
             if (stats == null) stats = GetComponent<GeneralAgentStats>();
-               
-            return CalculatePriority() > 0;
+
+            return stats.IsBored && stats.IsFriendly;
+            //return CalculatePriority() > 0;
         }
     }
 }

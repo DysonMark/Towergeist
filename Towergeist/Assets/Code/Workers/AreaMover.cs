@@ -32,6 +32,7 @@ namespace Movement
         public AStarPathfinder pathfinder;
         [Tooltip("Movement speed in seconds")]
         public float moveSpeed = 3f;
+        public bool IsMoving => _isMoving;
 
         private List<Node> _path;
         private int _pathIndex;

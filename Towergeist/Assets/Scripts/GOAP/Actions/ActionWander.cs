@@ -25,7 +25,7 @@ namespace JW.Grid.GOAP.Actions
         public override void OnActivated()
         {
             // Start picking a random location
-            PickLocation:
+            /*PickLocation:
             Vector2 wanderPositionVector2 = Random.insideUnitCircle * wanderRadius;
             Vector3 wanderPosition = new  Vector3(wanderPositionVector2.x, transform.position.y, wanderPositionVector2.y);
             var newWanderNode = moveSystem.gridScript.GetNode(wanderPosition);
@@ -37,15 +37,15 @@ namespace JW.Grid.GOAP.Actions
             else
             {
                 goto PickLocation;
-            }
+            }*/
         }
 
         public override void OnTick(float dt)
         {
-            if (Vector3.Distance(transform.position, moveSystem.endPoint.transform.position) < 0.1f) // If we are close to our goal
+            /*if (Vector3.Distance(transform.position, moveSystem.endPoint.transform.position) < 0.1f) // If we are close to our goal
             {
                 OnActivated(); // Then run the wander location picking again
-            }
+            }*/
         }
     }
 }

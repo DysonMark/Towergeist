@@ -11,11 +11,12 @@ GameObject:
   - component: {fileID: 7214234163991406278}
   - component: {fileID: 5474599548932202911}
   - component: {fileID: 3299193424181117529}
+  - component: {fileID: 6336459464335933342}
+  - component: {fileID: 2078954035747936121}
   - component: {fileID: 2974586361600840372}
   - component: {fileID: 8784998692589650808}
-  - component: {fileID: 1087550458057885445}
   - component: {fileID: 735057122911152306}
-  - component: {fileID: 8870861243989222760}
+  - component: {fileID: 1087550458057885445}
   - component: {fileID: 4436252950200972949}
   - component: {fileID: 6861025950665562476}
   - component: {fileID: 64455777893516775}
@@ -26,7 +27,6 @@ GameObject:
   - component: {fileID: 2815790430629028675}
   - component: {fileID: 4772643940863043103}
   - component: {fileID: 1492118466605474936}
-  - component: {fileID: 6336459464335933342}
   m_Layer: 3
   m_Name: Worker_Wood
   m_TagString: Agent
@@ -99,6 +99,42 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6336459464335933342
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1.5109116, z: 2}
+  m_Center: {x: 0, y: -0.2554558, z: 0}
+--- !u!114 &2078954035747936121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272517685237043754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844993e4ac9cc444aa7fbd5de7c91e82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCementAgent: 0
+  isStoneAgent: 0
+  isWoodAgent: 0
 --- !u!114 &2974586361600840372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,24 +173,6 @@ MonoBehaviour:
   restingArea: {fileID: 0}
   pathfinder: {fileID: 0}
   moveSpeed: 3
---- !u!114 &1087550458057885445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5272517685237043754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8691c5c98a0c4e27acf1b56e7f445768, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentGoal: {fileID: 0}
-  currentAction: {fileID: 0}
-  actions: []
-  goals: []
-  currentTime: 0
-  planInterval: 5
 --- !u!114 &735057122911152306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,27 +193,22 @@ MonoBehaviour:
   canFly: 0
   isHeavy: 0
   IsFriendly: 1
---- !u!65 &8870861243989222760
-BoxCollider:
+--- !u!114 &1087550458057885445
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5272517685237043754}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8691c5c98a0c4e27acf1b56e7f445768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGoal: {fileID: 0}
+  currentAction: {fileID: 0}
+  actions: []
+  goals: []
 --- !u!114 &4436252950200972949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,9 +222,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 0
-  moveSystem: {fileID: 0}
-  moveSystemTwo: {fileID: 0}
-  moveSystemThree: {fileID: 0}
   tiredThreshold: 50
   workRate: 10
   areaMover: {fileID: 8784998692589650808}
@@ -228,9 +238,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 0
-  moveSystem: {fileID: 0}
-  moveSystemTwo: {fileID: 0}
-  moveSystemThree: {fileID: 0}
   areaMover: {fileID: 8784998692589650808}
 --- !u!114 &64455777893516775
 MonoBehaviour:
@@ -247,7 +254,12 @@ MonoBehaviour:
   GoalCanRun: 0
   GoalCompleted: 0
   isGoalActivated: 0
+  BasePriority: 50
+  currentPriority: 30
+  MaxPriority: 50
   tiredThreshold: 50
+  ResourceThreshold: 10
+  resourceManager: {fileID: 2974586361600840372}
 --- !u!114 &2617979273709695128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,9 +289,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 0
-  moveSystem: {fileID: 0}
-  moveSystemTwo: {fileID: 0}
-  moveSystemThree: {fileID: 0}
   chatRestAmount: 20
   areaMover: {fileID: 8784998692589650808}
 --- !u!114 &4548699925887489271
@@ -295,9 +304,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 0
-  moveSystem: {fileID: 0}
-  moveSystemTwo: {fileID: 0}
-  moveSystemThree: {fileID: 0}
   areaMover: {fileID: 8784998692589650808}
 --- !u!114 &838323583768768712
 MonoBehaviour:
@@ -361,24 +367,3 @@ MonoBehaviour:
   GoalCompleted: 0
   isGoalActivated: 0
   priority: 10
---- !u!65 &6336459464335933342
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5272517685237043754}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 1.5109116, z: 2}
-  m_Center: {x: 0, y: -0.2554558, z: 0}

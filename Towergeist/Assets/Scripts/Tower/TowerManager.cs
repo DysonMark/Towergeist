@@ -12,6 +12,7 @@ namespace Tower
         [Header("Tower Levels")]
         int towerLevel = 0;
         [SerializeField] private GameObject[] towerLevels;
+        public bool IsDone => towerLevel == towerLevels.Length;
 
         [Header("Resources")] 
         private ResourceManager resourceManager;

@@ -11,22 +11,22 @@ GameObject:
   - component: {fileID: 3416784375703315688}
   - component: {fileID: 5587483513717221372}
   - component: {fileID: 2215305685952982547}
+  - component: {fileID: 6267109389713300707}
+  - component: {fileID: 1013467055633686632}
   - component: {fileID: 7890394629447191520}
   - component: {fileID: 417556476757965052}
   - component: {fileID: 5854063283811047622}
-  - component: {fileID: 6369958198982637388}
   - component: {fileID: 146646722057106255}
   - component: {fileID: 1211108400743887515}
   - component: {fileID: 4569719880419167916}
+  - component: {fileID: 3307981844329140403}
+  - component: {fileID: 373052702321771401}
   - component: {fileID: 8539422706387200916}
   - component: {fileID: 4710699730033933147}
   - component: {fileID: 5956773426838070677}
-  - component: {fileID: 3307981844329140403}
-  - component: {fileID: 373052702321771401}
-  - component: {fileID: 2529881750415496532}
-  - component: {fileID: 4488752859296621434}
   - component: {fileID: 1338685337659570379}
-  - component: {fileID: 6267109389713300707}
+  - component: {fileID: 4488752859296621434}
+  - component: {fileID: 2529881750415496532}
   m_Layer: 3
   m_Name: Worker_Stone
   m_TagString: Agent
@@ -99,6 +99,42 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6267109389713300707
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332946761731588968}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1.5109116, z: 2}
+  m_Center: {x: 0, y: -0.2554558, z: 0}
+--- !u!114 &1013467055633686632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332946761731588968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844993e4ac9cc444aa7fbd5de7c91e82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCementAgent: 0
+  isStoneAgent: 0
+  isWoodAgent: 0
 --- !u!114 &7890394629447191520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,27 +193,6 @@ MonoBehaviour:
   canFly: 0
   isHeavy: 1
   IsFriendly: 1
---- !u!65 &6369958198982637388
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3332946761731588968}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1.5175152, z: 1}
-  m_Center: {x: 0, y: -0.2587577, z: 0}
 --- !u!114 &146646722057106255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,8 +209,6 @@ MonoBehaviour:
   currentAction: {fileID: 0}
   actions: []
   goals: []
-  currentTime: 0
-  planInterval: 5
 --- !u!114 &1211108400743887515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,9 +222,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 0
-  moveSystem: {fileID: 0}
-  moveSystemTwo: {fileID: 0}
-  moveSystemThree: {fileID: 0}
   tiredThreshold: 50
   workRate: 10
   areaMover: {fileID: 417556476757965052}
@@ -228,9 +238,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 0
-  moveSystem: {fileID: 0}
-  moveSystemTwo: {fileID: 0}
-  moveSystemThree: {fileID: 0}
+  areaMover: {fileID: 417556476757965052}
+--- !u!114 &3307981844329140403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332946761731588968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19745ceca5d510d4f9013f1f5ed4c71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
+  chatRestAmount: 20
+  areaMover: {fileID: 417556476757965052}
+--- !u!114 &373052702321771401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332946761731588968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b3b10e877fc614dbab91f108e9258c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cost: 0
   areaMover: {fileID: 417556476757965052}
 --- !u!114 &8539422706387200916
 MonoBehaviour:
@@ -247,7 +283,12 @@ MonoBehaviour:
   GoalCanRun: 0
   GoalCompleted: 0
   isGoalActivated: 0
+  BasePriority: 50
+  currentPriority: 30
+  MaxPriority: 50
   tiredThreshold: 50
+  ResourceThreshold: 10
+  resourceManager: {fileID: 7890394629447191520}
 --- !u!114 &4710699730033933147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,71 +321,6 @@ MonoBehaviour:
   GoalCompleted: 0
   isGoalActivated: 0
   tiredThreshold: 50
---- !u!114 &3307981844329140403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3332946761731588968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19745ceca5d510d4f9013f1f5ed4c71e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Cost: 0
-  moveSystem: {fileID: 0}
-  moveSystemTwo: {fileID: 0}
-  moveSystemThree: {fileID: 0}
-  chatRestAmount: 20
-  areaMover: {fileID: 417556476757965052}
---- !u!114 &373052702321771401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3332946761731588968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40b3b10e877fc614dbab91f108e9258c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Cost: 0
-  moveSystem: {fileID: 0}
-  moveSystemTwo: {fileID: 0}
-  moveSystemThree: {fileID: 0}
-  areaMover: {fileID: 417556476757965052}
---- !u!114 &2529881750415496532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3332946761731588968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c702883266b0845b054f7fb4ed6a3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chatSprite: {fileID: 21300000, guid: bf744ff044fb92d489d719de419f515e, type: 3}
-  height: 2
-  duration: 2
---- !u!114 &4488752859296621434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3332946761731588968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7f5e57f36b25f346abe4ca3650004c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  yellSprite: {fileID: 21300000, guid: f5d59dfe231fe814d8cbfca2b7050e13, type: 3}
-  height: 2
-  duration: 3
 --- !u!114 &1338685337659570379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,24 +337,33 @@ MonoBehaviour:
   GoalCompleted: 0
   isGoalActivated: 0
   basePriority: 20
---- !u!65 &6267109389713300707
-BoxCollider:
+--- !u!114 &4488752859296621434
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3332946761731588968}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 1.5109116, z: 2}
-  m_Center: {x: 0, y: -0.2554558, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f5e57f36b25f346abe4ca3650004c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yellSprite: {fileID: 21300000, guid: f5d59dfe231fe814d8cbfca2b7050e13, type: 3}
+  height: 2
+  duration: 3
+--- !u!114 &2529881750415496532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332946761731588968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c702883266b0845b054f7fb4ed6a3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatSprite: {fileID: 21300000, guid: bf744ff044fb92d489d719de419f515e, type: 3}
+  height: 2
+  duration: 2

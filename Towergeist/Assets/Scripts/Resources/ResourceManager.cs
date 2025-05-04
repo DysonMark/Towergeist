@@ -25,7 +25,8 @@ namespace Resources
         {
             Wood,
             Stone,
-            Cement
+            Cement,
+            Unknown
         }
 
         private void Start()
@@ -51,7 +52,6 @@ namespace Resources
             {
                 IsOnResourceSite = true;
                 resourceSite = other.GetComponent<ResourceSite>();
-                Debug.Log($"<color=red> {gameObject.name} is on resource site {resourceSite.resourceType}");
             }
         }
 
@@ -84,17 +84,17 @@ namespace Resources
         /// <param name="amount"></param>
         public void AddResource(ResourceType resource, float amount)
         {
-            if (resource == ResourceType.Wood && gameObject.name == "WoodAgent")
+            if (resource == ResourceType.Wood)
             {
                 WoodAmount += amount; 
                 if (woodAmountText) woodAmountText.text = $"Wood: {WoodAmount}";
             }
-            else if (resource == ResourceType.Stone && gameObject.name == "StoneAgent")
+            else if (resource == ResourceType.Stone)
             {
                 StoneAmount += amount; 
                 if (stoneAmountText) stoneAmountText.text = $"Stone: {StoneAmount}";
             }
-            else if (resource == ResourceType.Cement && gameObject.name == "CementAgent")
+            else if (resource == ResourceType.Cement)
             {
                 CementAmount += amount; 
                 if (cementAmountText) cementAmountText.text = $"Cement: {CementAmount}";

@@ -1,4 +1,5 @@
 using AStarPathFinding.PathFinder;
+using Movement;
 using UnityEngine;
 
 namespace JW.Grid.GOAP.Goals
@@ -10,7 +11,7 @@ namespace JW.Grid.GOAP.Goals
         [HideInInspector] public bool GoalCanRun;
         [HideInInspector] public bool GoalCompleted;
         [HideInInspector] public bool isGoalActivated;
-        protected CapsuleMover  moveSystem;
+        protected AreaMover moveSystem;
 
         public virtual void Awake()
         {
