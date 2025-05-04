@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Stat;
 
 namespace Actions.Chat
 {
@@ -6,27 +7,32 @@ namespace Actions.Chat
     public class YellInteraction : MonoBehaviour
     {
         #region Variables
-        [Tooltip("Sprite to show when yelling.")]
+        public SpriteRenderer yellRenderer;
         public Sprite yellSprite;
-        [Tooltip("Height above the agent to spawn the sprite.")]
-        public float height = 2f;
-        [Tooltip("Seconds before the pop-up disappears.")]
         public float duration = 2f;
+
+        private float _timer;
         #endregion
+
+        void Update()
+        {
+            if (yellRenderer.enabled)
+            {
+                _timer += Time.deltaTime;
+                if (_timer >= duration)
+                    yellRenderer.enabled = false;
+            }
+        }
 
         public void ShowYell()
         {
-            if (yellSprite == null) return;
+            foreach (var agent in FindObjectsOfType<GeneralAgentStats>())
+                if (agent.IsFriendly)
+                    agent.IsBeingYelledAt = true;
 
-            var go = new GameObject("YellPopup");
-            go.transform.SetParent(transform, false);
-            go.transform.localPosition = Vector3.up * height;
-
-            var sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = yellSprite;
-            sr.sortingOrder = 100;
-
-            Destroy(go, duration);
+            _timer = 0f;
+            yellRenderer.sprite = yellSprite;
+            yellRenderer.enabled = true;
         }
     }
 }

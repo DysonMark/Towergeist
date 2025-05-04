@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using JW.Grid.GOAP.Actions;
 using UnityEngine;
@@ -62,7 +62,7 @@ namespace Actions.Yell
                 victim.GetComponent<GeneralAgentStats>().IsBeingYelledAt = true;
 
                 GetComponent<SpritePopup>()?.ShowYell();
-                victim.GetComponent<SpritePopup>()?.ShowYell();
+                //victim.GetComponent<SpritePopup>()?.ShowYell();
             }
             else
             {
