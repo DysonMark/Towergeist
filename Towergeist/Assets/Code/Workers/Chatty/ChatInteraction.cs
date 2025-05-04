@@ -6,27 +6,30 @@ namespace Actions.Chat
     public class ChatInteraction : MonoBehaviour
     {
         #region Variables
-        [Tooltip("Sprite to show when chatting.")]
+        public SpriteRenderer chatRenderer;
         public Sprite chatSprite;
-        [Tooltip("Height above the agent to spawn the sprite.")]
-        public float height = 2f;
-        [Tooltip("Seconds before the popup disappears.")]
         public float duration = 2f;
+
+        private float _timer;
         #endregion
+
+        void Update()
+        {
+            if (chatRenderer.enabled)
+            {
+                _timer += Time.deltaTime;
+                if (_timer >= duration)
+                {
+                    chatRenderer.enabled = false;
+                }
+            }
+        }
 
         public void ShowChat()
         {
-            if (chatSprite == null) return;
-
-            var go = new GameObject("ChatPopup");
-            go.transform.SetParent(transform, false);
-            go.transform.localPosition = Vector3.up * height;
-
-            var sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = chatSprite;
-            sr.sortingOrder = 100;
-
-            Destroy(go, duration);
+            _timer = 0f;
+            chatRenderer.sprite = chatSprite;
+            chatRenderer.enabled = true;
         }
     }
 }

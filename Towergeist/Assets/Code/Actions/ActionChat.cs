@@ -1,12 +1,13 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using JW.Grid.GOAP.Actions;
+using System.Linq;
 using UnityEngine;
-using Agents.Goalss;
+using JW.Grid.GOAP.Actions;
 using Stat;
-using Actions.CompletionAnnouncement;
 using Movement;
+using Actions.Chat;
+using Actions.CompletionAnnouncement;
+using Agents.Goals;
 
 namespace Actions.Chat
 {
@@ -16,80 +17,77 @@ namespace Actions.Chat
     public class ActionChat : ActionBase, ICompletableAction
     {
         #region Variables
-        [Tooltip("How much tiredness chatting recovers.")]
-        public int chatRestAmount = 20;
+        public float chatDuration = 5f;
+        private GeneralAgentStats _stats;
+        private ChatRoomSensor _chatSensor;
+        private AreaMover _mover;
+        private ChatInteraction _chatView;
+        private float _timer;
+        private bool _hasArrived;
+        #endregion
 
-        private GeneralAgentStats stats;
-        [SerializeField] private AreaMover areaMover;
-
+        #region Public Functions
         public bool IsDone { get; private set; }
         public event Action OnCompleted;
 
-        public override List<Type> GetSupportedGoals() => new() { typeof(GoalRest) };
+        public override List<Type> GetSupportedGoals() => new() { typeof(GoalChat) };
         public override float GetCost() => 1f;
-        #endregion
 
         public override void OnActivated()
         {
-            stats ??= GetComponent<GeneralAgentStats>();
-            areaMover ??= GetComponent<AreaMover>();
-            if (areaMover == null)
+            _stats ??= GetComponent<GeneralAgentStats>();
+            _chatSensor ??= FindObjectOfType<ChatRoomSensor>();
+            _mover ??= GetComponent<AreaMover>();
+            _chatView ??= GetComponent<ChatInteraction>();
+
+            if (!_stats.IsFriendly || !_stats.IsBored || _mover == null || _chatView == null)
             {
-                Complete(); return;
+                Complete();
+                return;
             }
 
-            if (!stats.IsFriendly)
-            {
-                Debug.Log($"{name}: Unfriendly Agents don't chitchat.");
-                Complete(); return;
-            }
-
-            bool someoneThere = GameObject.FindGameObjectsWithTag("Agent")
-                .Any(g =>
-                    g != gameObject &&
-                    Vector3.Distance(g.transform.position, areaMover.chattingArea.position) < 1f
-                );
-
-            if (!someoneThere)
-            {
-                Debug.Log($"{name}: No one to chat with; cancelling.");
-                Complete(); return;
-            }
-
-            IsDone = false;
-            Debug.Log($"{name}: Heading to chat area.");
-            areaMover.OnArrived += Arrived;
-            areaMover.MoveTo(AreaMover.Destination.ChattingArea);
+            _hasArrived = false;
+            _mover.OnArrived += OnArrived;
+            _mover.MoveTo(AreaMover.Destination.ChattingArea);
         }
 
-        private void Arrived()
+        public override void OnTick(float deltaTime)
         {
-            areaMover.OnArrived -= Arrived;
-            Debug.Log($"{name}: Chatting…");
+            if (!_hasArrived) return;
 
-            GetComponent<Animator>()?.SetTrigger("Chat");
-            stats.Tiredness = Mathf.Max(0, stats.Tiredness - chatRestAmount);
-            stats.IsBored = false;
+            _timer += deltaTime;
+            _stats.BoredomLevel = Mathf.Max(0f, _stats.BoredomLevel - _chatSensor.boredomDrainRate * deltaTime);
+            _chatView.ShowChat();
 
-            GetComponent<SpritePopup>()?.ShowChat();
-            foreach (var other in GameObject.FindGameObjectsWithTag("Agent")
-                         .Where(g =>
-                             g != gameObject &&
-                             Vector3.Distance(g.transform.position, areaMover.chattingArea.position) < 1f))
+            if (_timer >= chatDuration || !_stats.IsBored)
+                Complete();
+        }
+
+        public override void OnDeactivated()
+        {
+            _mover.OnArrived -= OnArrived;
+        }
+        #endregion
+
+        #region Private Functions
+        private void OnArrived()
+        {
+            _mover.OnArrived -= OnArrived;
+            _hasArrived = true;
+            _timer = 0f;
+
+            foreach (var other in _chatSensor._inside.Where(s => s.IsFriendly))
             {
-                other.GetComponent<SpritePopup>()?.ShowChat();
+                other.GetComponent<ChatInteraction>()?.ShowChat();
             }
-
-            Complete();
         }
 
         private void Complete()
         {
+            _mover.OnArrived -= OnArrived;
             IsDone = true;
             OnCompleted?.Invoke();
         }
-
-        public override void OnTick(float dt) { }
-        public override void OnDeactivated() { }
+        #endregion
     }
 }

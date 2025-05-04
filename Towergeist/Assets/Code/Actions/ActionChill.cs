@@ -1,45 +1,53 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Stat;
-using Actions.CompletionAnnouncement;
-using JW.Grid.GOAP.Goals;
 using JW.Grid.GOAP.Actions;
-using Movement;  
+using Stat;
+using Movement;
+using Actions.CompletionAnnouncement;
+using JW.Grid.Sensors;
+using Agents.Goals;
 
-namespace Actions.GoToChatRoom
+namespace Actions.Chill
 {
-    /// <summary>Moves a friendly AI into the chat room, then triggers the chat animation.</summary>
-    public class ActionGoToChatRoom : ActionBase, ICompletableAction
+    public class ActionChill : ActionBase, ICompletableAction
     {
         #region Variables
-        [SerializeField] private AreaMover areaMover;      
+        [SerializeField] private AreaMover areaMover;
+
+        private GeneralAgentStats _stats;
+        private BaseSensor _sensor;
+
         public bool IsDone { get; private set; }
         public event Action OnCompleted;
 
-        public override List<Type> GetSupportedGoals() => new() { typeof(GoalChat) };
+        public override List<Type> GetSupportedGoals() => new() { typeof(GoalChill) };
         public override float GetCost() => 1f;
         #endregion
 
         public override void OnActivated()
         {
+            _stats ??= GetComponent<GeneralAgentStats>();
+            _sensor ??= GetComponent<BaseSensor>();
             areaMover ??= GetComponent<AreaMover>();
-            if (areaMover == null)
+
+            if (!_stats.IsFriendly || !_stats.IsBored || areaMover == null)
             {
                 Complete();
                 return;
             }
 
+            // we know sensor.IsTriggered implied friendly sight
             IsDone = false;
-            Debug.Log($"{name}: Heading to chat room.");
             areaMover.OnArrived += Arrived;
             areaMover.MoveTo(AreaMover.Destination.ChattingArea);
         }
 
+        #region Private Functions
         private void Arrived()
         {
             areaMover.OnArrived -= Arrived;
-            GetComponent<Animator>()?.SetTrigger("Chat");
+            // once we reach chatroom, mark chill done so GOAP will pick GoalChat next
             Complete();
         }
 
@@ -48,17 +56,9 @@ namespace Actions.GoToChatRoom
             IsDone = true;
             OnCompleted?.Invoke();
         }
+        #endregion
 
         public override void OnTick(float dt) { }
-        public override void OnDeactivated()
-        {
-            var stats = GetComponent<GeneralAgentStats>();
-            if (stats != null)
-            {
-                stats.IsBored = false;
-                if (stats.Tiredness <= 20) stats.CanSleep = true;
-                else stats.Rested += 10;
-            }
-        }
+        public override void OnDeactivated() { }
     }
 }

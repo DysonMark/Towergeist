@@ -1,87 +1,109 @@
-using System;
+﻿using System;
 using System.Linq;
-using JW.Grid.GOAP.Actions;
 using UnityEngine;
-using Agents.Goalss;
+using JW.Grid.GOAP.Actions;
 using Stat;
-using Actions.CompletionAnnouncement;
 using Movement;
-using System.Collections.Generic;
 using Actions.Chat;
+using Actions.CompletionAnnouncement;
+using System.Collections.Generic;
+using Agents.Goals;
 
-namespace Actions.Yell
+public class ActionYell : ActionBase, ICompletableAction
 {
-    public class ActionYell : ActionBase, ICompletableAction
+    #region Variables
+    private GeneralAgentStats _stats;
+    private ChatRoomSensor _chatSensor;
+    private AreaMover _mover;
+    private float _timer;
+    private bool _hasArrived;
+    private GeneralAgentStats _victim;
+    #endregion
+
+    #region Public Functions
+    public bool IsDone { get; private set; }
+    public event Action OnCompleted;
+
+    public override List<Type> GetSupportedGoals() => new() { typeof(GoalRest) };
+    public override float GetCost() => 1f;
+
+    public override void OnActivated()
     {
-        #region Variables
-        [SerializeField] private AreaMover areaMover;
+        _stats ??= GetComponent<GeneralAgentStats>();
+        _chatSensor ??= FindObjectOfType<ChatRoomSensor>();
+        _mover ??= GetComponent<AreaMover>();
 
-        public bool IsDone { get; private set; }
-        public event Action OnCompleted;
-
-        public override List<Type> GetSupportedGoals() => new() { typeof(GoalRest) };
-        public override float GetCost() => 1f;
-        private GeneralAgentStats _stats;
-        #endregion
-
-        public override void OnActivated()
+        if (_stats.IsFriendly || _mover == null)
         {
-            _stats ??= GetComponent<GeneralAgentStats>();
-            areaMover ??= GetComponent<AreaMover>();
-
-            if (areaMover == null)
-            {
-                Complete(); return;
-            }
-            if (_stats.IsFriendly)
-            {
-                Debug.Log($"{name}: Friendly agents do not yell.");
-                Complete(); return;
-            }
-
-            IsDone = false;
-            Debug.Log($"{name}: Heading to chat area to find a victim.");
-            areaMover.OnArrived += OnArrivedHandler;
-            areaMover.MoveTo(AreaMover.Destination.ChattingArea);
+            Complete();
+            return;
         }
 
-        private void OnArrivedHandler()
+        Transform chatSpot = _mover.chattingArea;
+        _mover.OnArrived += OnArrived;
+
+        if (Vector3.Distance(transform.position, chatSpot.position) < 0.5f)
+            OnArrived();
+        else
+            _mover.MoveTo(AreaMover.Destination.ChattingArea);
+    }
+
+    public override void OnTick(float deltaTime)
+    {
+        if (!_hasArrived || _victim == null) return;
+
+        _timer += deltaTime;
+        if (_timer >= 2f)
+            Complete();
+    }
+
+    public override void OnDeactivated()
+    {
+        _mover.OnArrived -= OnArrived;
+        _stats.IsBeingYelledAt = false;
+        if (_victim != null)
+            _victim.IsBeingYelledAt = false;
+    }
+    #endregion
+
+    #region Private Functions
+    #region Yell Logic
+    private void OnArrived()
+    {
+        _mover.OnArrived -= OnArrived;
+        _hasArrived = true;
+        _timer = 0f;
+
+        if (_stats.BoredomLevel <= 0f && !_chatSensor._inside.Any(s => s.IsFriendly))
         {
-            areaMover.OnArrived -= OnArrivedHandler;
+            _stats.CanSleep = true;
+            Complete();
+            return;
+        }
 
-            var victim = GameObject.FindGameObjectsWithTag("Agent")
-                .FirstOrDefault(g =>
-                    g != gameObject &&
-                    Vector3.Distance(g.transform.position, areaMover.chattingArea.position) < 1f &&
-                    g.GetComponent<GeneralAgentStats>()?.IsFriendly == true
-                );
+        _victim = _chatSensor._inside
+            .FirstOrDefault(s => s.IsFriendly
+                              && Vector3.Distance(transform.position, s.transform.position) <= 1f);
 
-            if (victim != null)
-            {
-                Debug.Log($"{name}: Yelling at {victim.name}!");
-                victim.GetComponent<GeneralAgentStats>().IsBeingYelledAt = true;
-
-                GetComponent<SpritePopup>()?.ShowYell();
-                victim.GetComponent<SpritePopup>()?.ShowYell();
-            }
-            else
-            {
-                Debug.Log($"{name}: No lazy agents here.");
-            }
-
+        if (_victim != null)
+        {
+            GetComponent<YellInteraction>()?.ShowYell();
+            _victim.IsBeingYelledAt = true;
+            _victim.ResetBoredom();
+            _victim.GetComponent<YellInteraction>()?.ShowYell();
+        }
+        else
+        {
+            _stats.CanSleep = true;
             Complete();
         }
-
-        private void Complete()
-        {
-            IsDone = true;
-            OnCompleted?.Invoke();
-        }
-
-        public override void OnTick(float dt) { }
-        public override void OnDeactivated()
-        {
-            _stats.IsBeingYelledAt = false;
-        }
     }
+    #endregion
+    private void Complete()
+    {
+        _mover.OnArrived -= OnArrived;
+        IsDone = true;
+        OnCompleted?.Invoke();
+    }
+    #endregion
 }

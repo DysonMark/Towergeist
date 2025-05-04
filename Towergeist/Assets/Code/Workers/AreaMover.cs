@@ -78,14 +78,6 @@ namespace Movement
             _path = pathfinder.FindPath(transform.position, targetPos);
             _pathIndex = 0;
             _isMoving = _path != null && _path.Count > 0;
-            if (_isMoving)
-            {
-                Debug.Log($"{name}: Moving to {dest} at {targetPos}");
-            }
-            else
-            {
-                Debug.LogWarning($"{name}: No path found to {dest}");
-            }
         }
     }
 }

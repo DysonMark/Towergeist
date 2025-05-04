@@ -13,9 +13,37 @@ namespace Stat
         [Tooltip("True: The worker cango to sleep")]
         public bool CanSleep = false;
 
-        [Header("Boredom")]
+        #region Boredom
         [Tooltip("True: Agent feels bored and may chat if theyre friendly.")]
-        public bool IsBored = false;
+        [Range(0, 100)] public float BoredomLevel = 0f;
+        public bool IsBored => BoredomLevel >= 50f;
+
+        public float MaxBoredom = 100f;
+        public void ResetBoredom()
+        {
+            if (IsFriendly)
+            {
+                BoredomLevel = MaxBoredom;
+                return;
+            }
+            BoredomLevel = 0f;
+        }
+        #endregion
+
+        #region Gossip
+        public float GossipMeter;
+        public float GossipThreshold = 50f;
+        public float MaxGossip = 100f;
+        public bool HasGossip => GossipMeter >= GossipThreshold;
+
+        public void AddGossip(float amount) => GossipMeter = Mathf.Min(MaxGossip, GossipMeter + amount);
+
+        public void ClearGossip() => GossipMeter = 0f;
+
+        #endregion
+
+        [Header("Chat riority")]
+        public int ChatPriorityModifier;
 
         [Header("Rested Counter")]
         [Tooltip("The rest value of the agent accumulated to subtract from tiredness meter when interrutped")]

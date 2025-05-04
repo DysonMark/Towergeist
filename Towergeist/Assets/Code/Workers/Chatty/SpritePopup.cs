@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Actions.Chat
@@ -6,36 +7,42 @@ namespace Actions.Chat
     public class SpritePopup : MonoBehaviour
     {
         #region Variables
-        [Header("Popup Sprites")]
-        [Tooltip("Sprite to show when chatting.")]
         public Sprite chatSprite;
-        [Tooltip("Sprite to show when yelling.")]
         public Sprite yellSprite;
-
-        [Header("Display Settings")]
-        [Tooltip("Height above the agent for the spriite to spawn")]
         public float height = 2f;
-        [Tooltip("Seconds before the pop-up disappears.")]
         public float duration = 2f;
+        [SerializeField] private SpriteRenderer _renderer;
+        private Coroutine _hideCoroutine;
         #endregion
 
-        public void Show(Sprite sprite)
+        #region Unity Methods
+        void Awake()
+        {
+            _renderer.sortingOrder = 100;
+            _renderer.enabled = false;
+        }
+        #endregion
+
+        #region Public Methods
+        public void ShowChat() => Show(chatSprite);
+        public void ShowYell() => Show(yellSprite);
+        #endregion
+
+        #region Private Methods
+        private void Show(Sprite sprite)
         {
             if (sprite == null) return;
-            var go = new GameObject("SpritePopup");
-            go.transform.SetParent(transform, false);
-            go.transform.localPosition = Vector3.up * height;
-
-            var sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = sprite;
-            sr.sortingOrder = 100;
-
-            Destroy(go, duration);
+            _renderer.sprite = sprite;
+            _renderer.enabled = true;
+            if (_hideCoroutine != null) StopCoroutine(_hideCoroutine);
+            _hideCoroutine = StartCoroutine(HideAfter());
         }
 
-        public void ShowChat() => Show(chatSprite);
-
-        public void ShowYell() => Show(yellSprite);
+        private IEnumerator HideAfter()
+        {
+            yield return new WaitForSeconds(duration);
+            _renderer.enabled = false;
+        }
+        #endregion
     }
 }
-

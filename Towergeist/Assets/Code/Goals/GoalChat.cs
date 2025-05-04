@@ -1,41 +1,26 @@
-﻿using Dyson.Towergeist;
+﻿using UnityEngine;
 using Stat;
-using UnityEngine;
 
 namespace JW.Grid.GOAP.Goals
 {
     public class GoalChat : GoalBase
     {
-        [SerializeField] private int basePriority = 20;
-        private GeneralAgentStats stats;
-        private bool isBeingYelledAt;
+        #region Variables
+        [SerializeField] private int basePriority = 150;
 
-        public override void OnGoalActivated()
-        {
-        }
-
-        public override void OnGoalDeactivated()
-        {
-        }
-
-        public override void OnGoalTick()
-        {
-        }
+        private GeneralAgentStats _stats;
+        #endregion
 
         public override int CalculatePriority()
         {
-            if (!stats.IsFriendly) return -1;
-            if (isBeingYelledAt) return -1;
-            if (stats.IsBored || stats.Tiredness <= 50)
-                return basePriority;
-            return -1;
+            _stats ??= GetComponent<GeneralAgentStats>();
+
+            if (!_stats.IsFriendly || _stats.IsBeingYelledAt)
+                return -1;
+
+            return basePriority;
         }
 
-        public override bool CanRun()
-        {
-            if (stats == null) stats = GetComponent<GeneralAgentStats>();
-               
-            return CalculatePriority() > 0;
-        }
+        public override bool CanRun() => CalculatePriority() > 0;
     }
 }
