@@ -2,7 +2,7 @@
 using System.Linq;
 using JW.Grid.GOAP.Actions;
 using UnityEngine;
-using Agents.Goalss;
+using Goals;
 using Stat;
 using Actions.CompletionAnnouncement;
 using Movement;
@@ -19,7 +19,7 @@ namespace Actions.Yell
         public bool IsDone { get; private set; }
         public event Action OnCompleted;
 
-        public override List<Type> GetSupportedGoals() => new() { typeof(GoalRest) };
+        public override List<Type> GetSupportedGoals() => new() { typeof(GoalDiscipline) };
         public override float GetCost() => 1f;
         private GeneralAgentStats _stats;
         #endregion
@@ -40,7 +40,7 @@ namespace Actions.Yell
             }
 
             IsDone = false;
-            Debug.Log($"{name}: Heading to chat area to find a victim.");
+            Debug.Log($"{name}: Patrolling for bored slackers.");
             areaMover.OnArrived += OnArrivedHandler;
             areaMover.MoveTo(AreaMover.Destination.ChattingArea);
         }
@@ -49,24 +49,32 @@ namespace Actions.Yell
         {
             areaMover.OnArrived -= OnArrivedHandler;
 
-            var victim = GameObject.FindGameObjectsWithTag("Agent")
-                .FirstOrDefault(g =>
+            var victims = GameObject.FindGameObjectsWithTag("Agent")
+                .Where(g =>
                     g != gameObject &&
-                    Vector3.Distance(g.transform.position, areaMover.chattingArea.position) < 1f &&
-                    g.GetComponent<GeneralAgentStats>()?.IsFriendly == true
-                );
+                    Vector3.Distance(g.transform.position, areaMover.chattingArea.position) < 1f)
+                .Select(g => g.GetComponent<GeneralAgentStats>())
+                .Where(stats => stats != null && stats.IsFriendly && stats.BoredomLevel > 0.5f)
+                .ToList();
 
-            if (victim != null)
+            if (victims.Any())
             {
-                Debug.Log($"{name}: Yelling at {victim.name}!");
-                victim.GetComponent<GeneralAgentStats>().IsBeingYelledAt = true;
+                foreach (var victim in victims)
+                {
+                    Debug.Log($"{name}: Yelling at {victim.name}!");
+                    victim.IsBeingYelledAt = true;
+                    victim.BoredomLevel = 0f;
+                    victim.IsBored = false;
+                    victim.Tiredness = 0;
+
+                    victim.GetComponent<SpritePopup>()?.ShowYell();
+                }
 
                 GetComponent<SpritePopup>()?.ShowYell();
-                //victim.GetComponent<SpritePopup>()?.ShowYell();
             }
             else
             {
-                Debug.Log($"{name}: No lazy agents here.");
+                Debug.Log($"{name}: No slackers to yell at.");
             }
 
             Complete();
@@ -79,6 +87,7 @@ namespace Actions.Yell
         }
 
         public override void OnTick(float dt) { }
+
         public override void OnDeactivated()
         {
             _stats.IsBeingYelledAt = false;

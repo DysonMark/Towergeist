@@ -57,7 +57,7 @@ namespace Actions.Work
             else
             {
                 // otherwise go gather resources
-                Debug.Log($"{name}: Moving to gathering area.");
+               // Debug.Log($"{name}: Moving to gathering area.");
                 areaMover.OnArrived += OnArrived;
                 areaMover.MoveTo(AreaMover.Destination.GatheringArea);
                 currentDestination = AreaMover.Destination.GatheringArea;
@@ -71,7 +71,7 @@ namespace Actions.Work
             if (currentDestination == AreaMover.Destination.WorkingArea) // If we are at the tower,
             {
                 // Drop off the resources and go straight back to gathering
-                Debug.Log($"{name}: Moving to gathering area.");
+               //  Debug.Log($"{name}: Moving to gathering area.");
                 areaMover.OnArrived += OnArrived;
                 areaMover.MoveTo(AreaMover.Destination.GatheringArea);
                 currentDestination = AreaMover.Destination.GatheringArea;
@@ -104,7 +104,7 @@ namespace Actions.Work
                 if (stats.Tiredness >= tiredThreshold)
                 {
                     Complete();
-                    Debug.Log($"{name}: Too tired, not gonna get work done.");
+                    // Debug.Log($"{name}: Too tired, not gonna get work done.");
                 }
 
                 if (resourceManager.GetResourceAmount(agentType.GetAgentType()) >= resourceThreshold)

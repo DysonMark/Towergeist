@@ -42,9 +42,9 @@ namespace Actions.Sleep
         private void Arrived()
         {
             areaMover.OnArrived -= Arrived;
-            Debug.Log($"{name}: Sleeping…");
+           // Debug.Log($"{name}: Sleeping…");
             stats.Tiredness = 0;
-            Debug.Log($"{name}: Fully rested.");
+           // Debug.Log($"{name}: Fully rested.");
             Complete();
         }
 

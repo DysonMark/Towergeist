@@ -81,11 +81,11 @@ namespace Movement
             _isMoving = _path != null && _path.Count > 0;
             if (_isMoving)
             {
-                Debug.Log($"{name}: Moving to {dest} at {targetPos}");
+                // Debug.Log($"{name}: Moving to {dest} at {targetPos}");
             }
             else
             {
-                Debug.LogWarning($"{name}: No path found to {dest}");
+               // Debug.LogWarning($"{name}: No path found to {dest}");
             }
         }
     }
