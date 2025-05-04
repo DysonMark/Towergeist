@@ -7,7 +7,7 @@ using Stat;
 using Movement;
 using Actions.Chat;
 using Actions.CompletionAnnouncement;
-using Agents.Goals;
+using JW.Grid.GOAP.Goals;
 
 namespace Actions.Chat
 {
