@@ -67,7 +67,7 @@ namespace Actions.Work
         private void OnArrived()
         {
             areaMover.OnArrived -= OnArrived;
-            
+
             if (currentDestination == AreaMover.Destination.WorkingArea) // If we are at the tower,
             {
                 // Drop off the resources and go straight back to gathering
@@ -99,12 +99,14 @@ namespace Actions.Work
                     //Debug.Log($"{name}: Working… Tiredness = {stats.Tiredness}");
                 }
 
+                stats.IncreaseBoredom(5);
+
                 if (stats.Tiredness >= tiredThreshold)
                 {
                     Complete();
                     Debug.Log($"{name}: Too tired, not gonna get work done.");
                 }
-                
+
                 if (resourceManager.GetResourceAmount(agentType.GetAgentType()) >= resourceThreshold)
                 {
                     areaMover.MoveTo(AreaMover.Destination.WorkingArea);
@@ -118,7 +120,7 @@ namespace Actions.Work
             // Resource Handling
             // if we are on a resource site, wait until we have enough resources before moving to the tower
 
-            
+
         }
 
         private void Complete()
@@ -129,7 +131,7 @@ namespace Actions.Work
 
         public override void OnDeactivated()
         {
-            Debug.Log($"{name}: Work action deactivated.");
+            // Debug.Log($"{name}: Work action deactivated.");
         }
     }
 }

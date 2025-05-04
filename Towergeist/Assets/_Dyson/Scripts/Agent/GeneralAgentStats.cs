@@ -16,6 +16,8 @@ namespace Stat
         [Header("Boredom")]
         [Tooltip("True: Agent feels bored and may chat if theyre friendly.")]
         public bool IsBored = false;
+        [Range(0, 1)] public float BoredomLevel = 0f;
+        public float BoredomThreshold = 0.7f;
 
         [Header("Rested Counter")]
         [Tooltip("The rest value of the agent accumulated to subtract from tiredness meter when interrutped")]
@@ -35,5 +37,16 @@ namespace Stat
         public bool isHeavy = false;
         [Tooltip("True: This Agent is friendly; otherwise it is not friendly")]
         public bool IsFriendly = true;
+
+        public void IncreaseBoredom(float rate)
+        {
+            BoredomLevel = Mathf.Clamp01(BoredomLevel + rate * Time.deltaTime);
+            IsBored = BoredomLevel >= BoredomThreshold;
+        }
+        public void DecreaseBoredom(float deltaTime)
+        {
+            BoredomLevel = Mathf.Clamp01(BoredomLevel - deltaTime * 0.2f);
+            IsBored = BoredomLevel >= BoredomThreshold;
+        }
     }
 }

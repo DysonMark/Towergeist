@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using JW.Grid.GOAP.Actions;
 using UnityEngine;
-using Agents.Goalss;
+using JW.Grid.GOAP.Goals;
 using Stat;
 using Actions.CompletionAnnouncement;
 using Movement;
@@ -16,8 +16,6 @@ namespace Actions.Chat
     public class ActionChat : ActionBase, ICompletableAction
     {
         #region Variables
-        [Tooltip("How much tiredness chatting recovers.")]
-        public int chatRestAmount = 20;
 
         private GeneralAgentStats stats;
         [SerializeField] private AreaMover areaMover;
@@ -25,8 +23,10 @@ namespace Actions.Chat
         public bool IsDone { get; private set; }
         public event Action OnCompleted;
 
-        public override List<Type> GetSupportedGoals() => new() { typeof(GoalRest) };
+        public override List<Type> GetSupportedGoals() => new() { typeof(GoalChat) };
         public override float GetCost() => 1f;
+
+        private bool hasArrived = false;
         #endregion
 
         public override void OnActivated()
@@ -45,18 +45,10 @@ namespace Actions.Chat
             }
 
             bool someoneThere = GameObject.FindGameObjectsWithTag("Agent")
-                .Any(g =>
-                    g != gameObject &&
-                    Vector3.Distance(g.transform.position, areaMover.chattingArea.position) < 1f
-                );
-
-            if (!someoneThere)
-            {
-                Debug.Log($"{name}: No one to chat with; cancelling.");
-                Complete(); return;
-            }
+                .Any(g => g != gameObject && Vector3.Distance(g.transform.position, areaMover.chattingArea.position) < 1f);
 
             IsDone = false;
+            hasArrived = false;
             Debug.Log($"{name}: Heading to chat area.");
             areaMover.OnArrived += Arrived;
             areaMover.MoveTo(AreaMover.Destination.ChattingArea);
@@ -67,9 +59,8 @@ namespace Actions.Chat
             areaMover.OnArrived -= Arrived;
             Debug.Log($"{name}: Chatting…");
 
-            GetComponent<Animator>()?.SetTrigger("Chat");
-            stats.Tiredness = Mathf.Max(0, stats.Tiredness - chatRestAmount);
             stats.IsBored = false;
+            hasArrived = true;
 
             GetComponent<SpritePopup>()?.ShowChat();
             foreach (var other in GameObject.FindGameObjectsWithTag("Agent")
@@ -89,7 +80,12 @@ namespace Actions.Chat
             OnCompleted?.Invoke();
         }
 
-        public override void OnTick(float dt) { }
+        public override void OnTick(float dt)
+        {
+            if (hasArrived)
+                stats.DecreaseBoredom(dt);
+        }
+
         public override void OnDeactivated() { }
     }
 }

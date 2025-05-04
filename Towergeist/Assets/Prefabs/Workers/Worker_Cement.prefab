@@ -19,13 +19,10 @@ GameObject:
   - component: {fileID: 7664247523403328709}
   - component: {fileID: 6204444252805310126}
   - component: {fileID: 7564106119304719086}
-  - component: {fileID: 4902080058664558701}
   - component: {fileID: 3535687253338550992}
-  - component: {fileID: 981365339121775109}
   - component: {fileID: 3087058287869071568}
   - component: {fileID: 5649279946031941206}
   - component: {fileID: 7959313752051739417}
-  - component: {fileID: 5777842836788113064}
   - component: {fileID: 1150102866868975432}
   m_Layer: 3
   m_Name: Worker_Cement
@@ -188,6 +185,8 @@ MonoBehaviour:
   Tiredness: 0
   CanSleep: 0
   IsBored: 0
+  BoredomLevel: 0
+  BoredomThreshold: 0.7
   Rested: 0
   IsBeingYelledAt: 0
   canFly: 1
@@ -225,6 +224,8 @@ MonoBehaviour:
   tiredThreshold: 50
   workRate: 10
   areaMover: {fileID: 4173173525171701594}
+  resourceThreshold: 10
+  currentDestination: 0
 --- !u!114 &7564106119304719086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,21 +239,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 0
-  areaMover: {fileID: 4173173525171701594}
---- !u!114 &4902080058664558701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 87725504943284057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19745ceca5d510d4f9013f1f5ed4c71e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Cost: 0
-  chatRestAmount: 20
   areaMover: {fileID: 4173173525171701594}
 --- !u!114 &3535687253338550992
 MonoBehaviour:
@@ -268,21 +254,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cost: 0
   areaMover: {fileID: 4173173525171701594}
---- !u!114 &981365339121775109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 87725504943284057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c702883266b0845b054f7fb4ed6a3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chatSprite: {fileID: 21300000, guid: bf744ff044fb92d489d719de419f515e, type: 3}
-  height: 2
-  duration: 2
 --- !u!114 &3087058287869071568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,8 +266,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f5e57f36b25f346abe4ca3650004c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yellRenderer: {fileID: 0}
   yellSprite: {fileID: 21300000, guid: f5d59dfe231fe814d8cbfca2b7050e13, type: 3}
-  height: 2
   duration: 3
 --- !u!114 &5649279946031941206
 MonoBehaviour:
@@ -333,24 +304,7 @@ MonoBehaviour:
   currentPriority: 30
   MaxPriority: 50
   tiredThreshold: 50
-  ResourceThreshold: 10
   resourceManager: {fileID: 478877802060008668}
---- !u!114 &5777842836788113064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 87725504943284057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cde9df4c74423c144a961f0583038077, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GoalCanRun: 0
-  GoalCompleted: 0
-  isGoalActivated: 0
-  basePriority: 20
 --- !u!114 &1150102866868975432
 MonoBehaviour:
   m_ObjectHideFlags: 0

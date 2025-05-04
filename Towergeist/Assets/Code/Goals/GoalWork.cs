@@ -25,14 +25,19 @@ namespace Agents.Goals
             if (stats == null) stats = GetComponent<GeneralAgentStats>();
 
             currentPriority = BasePriority;
-            
+
+            // more boredom less work for friendly 
+            if (stats.IsFriendly && stats.BoredomLevel > 0.2f)
+                return 0; // let Chat win
+
             // more tired less work
             if (stats.Tiredness >= tiredThreshold) return -1;
             currentPriority = currentPriority - stats.Tiredness;
 
             // more resource of its type = lower priority
-            currentPriority = currentPriority - resourceManager.GetResourceAmount(GetComponent<WhichAgent>().GetAgentType()); 
-            
+            currentPriority = currentPriority - resourceManager.GetResourceAmount(GetComponent<WhichAgent>().GetAgentType());
+
+            currentPriority = Mathf.Clamp(currentPriority, 0, MaxPriority);
             return (int)currentPriority;
         }
         
